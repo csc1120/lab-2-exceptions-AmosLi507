@@ -6,25 +6,48 @@
  * Last Updated: 9/12/2024
  */
 package username;
+
+import java.util.Random;
+
 /**
  *The die class represents a die with a signed number of sides.
  *It provides method to roll the die and provide the current value.
  */
 public class Die {
+    /**
+     * The minimum side of a die is 2.
+     */
+    public static final int MIN_SIDES = 2;
+    /**
+     * The maximum side of a die is 100.
+     */
+    public static final int MAX_SIDES = 100;
+    private int currentValue;
     private final int numSides;
-    private int currentValue = 0;
-    private final int minSide = 2;
-    private final int maxSide = 100;
+    private final Random random;
 
-    Die(int numSides){
-        this.numSides = numSides;
-        if(numSides < minSide || numSides > maxSide){
-            throw new IllegalArgumentException("illegal number of sides: "+ numSides);
+    /**
+     * Constructs a die with certain number of sides.
+     * @param numSides The number of sides must between 2-100.
+     * @throws IllegalArgumentException if numSides is out of range
+     */
+    public Die(int numSides){
+        if(numSides < MIN_SIDES || numSides > MAX_SIDES) {
+            throw new IllegalArgumentException("illegal number of sides: " + numSides);
         }
+        this.currentValue = 0;
+        this.numSides = numSides;
+        this.random = new Random();
     }
-    int getCurrentValue(){
+
+    /**
+     * Gets the current value of the die.
+     * @return the rolled value of the die.
+     * @throws DieNotRolledException if the die is not rolled and the current value is 0.
+     */
+    public int getCurrentValue(){
         roll();
-        if(currentValue ==0 || currentValue > numSides){
+        if(currentValue ==0){
             throw new DieNotRolledException("Die has not been rolled yet.");
         }
         int value = currentValue;
@@ -32,7 +55,10 @@ public class Die {
         return value;
     }
 
-    private void roll(){
-        currentValue = (int)(Math.random()*numSides+1);
+    /**
+     * Roll the die by randomly generating a number between the range.
+     */
+    public void roll(){
+        currentValue = random.nextInt(numSides) + 1;
     }
 }
