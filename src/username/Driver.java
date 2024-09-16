@@ -3,7 +3,7 @@
  * Lab 2 - Exceptions
  * Main Driver class
  * Name: Amos Li
- * Last Updated: 9/12/2024 split
+ * Last Updated: 9/12/2024 splita
  */
 package username;
 
