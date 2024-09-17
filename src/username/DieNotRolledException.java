@@ -3,7 +3,7 @@
  * Lab 2 - Exceptions
  * DieNotRolledException class
  * Name: Amos Li
- * Last Updated: 9/12/2024
+ * Last Updated: 9/16/2024
  */
 package username;
 
@@ -12,14 +12,19 @@ package username;
  *This class extends @NumberFormatException to indicate this exception is a number format issue.
  */
 public class DieNotRolledException extends RuntimeException {
+
     /**
-     * The DieNotRolledException is a custom exception that is thrown when
-     * the die is not rolled
+     * Constructs a new DieNotRolledException class with the detailed message.
      * @param message The message to tell people the die is not rolled
      */
     public DieNotRolledException(String message) {
         super(message);
     }
+
+    /**
+     * Gets the detailed message.
+     * @return The detailed string message.
+     */
     public String getMessage(){
         return super.getMessage();
     }

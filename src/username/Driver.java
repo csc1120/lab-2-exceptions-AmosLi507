@@ -3,9 +3,17 @@
  * Lab 2 - Exceptions
  * Main Driver class
  * Name: Amos Li
- * Last Updated: 9/12/2024 splita
+ * Last Updated: 9/16/2024
  */
 package username;
+
+/*
+ * Course: CSC1020
+ * Lab 2 - Exceptions
+ * Main Driver class
+ * Name: Amos Li
+ * Last Updated: 9/12/2024
+ */
 
 import java.util.Scanner;
 
@@ -17,7 +25,7 @@ import java.util.Scanner;
  */
 public class Driver {
     /**
-    The minimum of dice is 2.
+     The minimum of dice is 2.
      */
     public static final int MIN_DICE = 2;
     /**
@@ -25,19 +33,48 @@ public class Driver {
      */
     public static final int MAX_DICE = 10;
 
-    private static int[] getInput(){
+    /**
+     * Gets three variables inputs seperated by a space.
+     * Catches related exceptions by the scanner object.
+     * @return return an array of int with length of 3 which is the
+     * input three numbers.
+     */
+    private int[] getInput(){
+        final int goodLength = 3;
+        int i;
         Scanner sc = new Scanner(System.in);
         System.out.print("Enter configuration:");
         String strConf = sc.nextLine();
-        String[] dieStrData = strConf.split(" ", 3);
-        int[] dieIntData = new int[dieStrData.length];
-        for(int i = 0; i < dieIntData.length; i++){
-            dieIntData[i] = Integer.parseInt(dieStrData[i]);
+        String[] dieStrData = strConf.split(" ");
+        int[] dieIntData = null;
+        boolean flag = true;
+        while(flag){
+            try{
+                for(i = 0; i < goodLength; i++){
+                    dieIntData = new int[goodLength];
+                    dieIntData[i] = Integer.parseInt(dieStrData[i]);
+                }
+                flag = false;
+            } catch(ArrayIndexOutOfBoundsException e){
+                System.err.println("Invalid input: Expected 3 values but only received "
+                        + e.getMessage().substring(e.getMessage().length()-1));
+            } catch(NumberFormatException e){
+                System.err.println("Invalid input: All values must be whole numbers.");
+            } catch(DieNotRolledException e){
+                System.err.println(e.getMessage());
+            }
         }
+        sc.close();
         return dieIntData;
     }
 
-    private static Die[] createDice(int numDice, int numSides) {
+    /**
+     * Creates dice based on number of dice and number of side.
+     * @param numDice The number of dice to create.
+     * @param numSides The number of sides to create.
+     * @return return an array of Die objects.
+     */
+    private Die[] createDice(int numDice, int numSides) {
         Die[] dice = new Die[numDice];
         for (int i = 0; i < dice.length; i++) {
             dice[i] = new Die(numSides);
@@ -45,7 +82,14 @@ public class Driver {
         return dice;
     }
 
-    private static int[] rollDice(Die[] dice, int numSides, int numRolls) {
+    /**
+     * Rolls all the dice and records the results
+     * @param dice The array of Die objects to be rolled.
+     * @param numSides Number of sides of the dice.
+     * @param numRolls Number of rolls.
+     * @return An array of int which records the frequency of the result.
+     */
+    private int[] rollDice(Die[] dice, int numSides, int numRolls) {
         int rollsLength = (numSides - 1) * dice.length + 1;
         int[] rolls = new int[rollsLength];
         for(int i = 0; i < numRolls; i++) {
@@ -58,7 +102,12 @@ public class Driver {
         return rolls;
     }
 
-    private static int findMax(int[] rolls){
+    /**
+     * Find maximum in an array of roll count.
+     * @param rolls The array of roll count.
+     * @return an int which is the frequency of maximum roll count.
+     */
+    private int findMax(int[] rolls){
         int max = rolls[0];
         for(int i = 1; i < rolls.length; i++) {
             if(rolls[i] > max) {
@@ -68,13 +117,19 @@ public class Driver {
         return max;
     }
 
-    private static void report(int numDice, int[] rolls, int max) {
+    /**
+     * Reports the rolling result in a formatted banner.
+     * @param numDice The number of Dice rolled.
+     * @param rolls The rolling result.
+     * @param max The maximum of the rolling result.
+     */
+    private void report(int numDice, int[] rolls, int max) {
         final double highestCount = 10.0;
         double scale = (double) max / highestCount;
         int[] asterisksInt = new int[rolls.length];
         String[] asterisksStr = new String[asterisksInt.length];
         for (int i = 0; i < rolls.length; i++) {
-            asterisksInt[i] = (int) ((double) rolls[i] / scale) + 1;
+            asterisksInt[i] = (int) ((double) rolls[i] / scale);
         }
         for (int j = 0; j < asterisksStr.length; j++) {
             asterisksStr[j] = "";
@@ -93,10 +148,11 @@ public class Driver {
                 " how many sides the dice have,\n and how many rolls" +
                 " to complete, separating the values by a space.\n Example:" +
                 " \"2 6 1000\"\n");
-        int[] input = getInput();
-        Die[] dice = createDice(input[0], input[1]);
-        int[] rollDice = rollDice(dice, input[1], input[2]);
-        int max = findMax(rollDice);
-        report(input[0], rollDice, max);
+        Driver driver = new Driver();
+        int[] input = driver.getInput();
+        Die[] dice = driver.createDice(input[0], input[1]);
+        int[] rollDice = driver.rollDice(dice, input[1], input[2]);
+        int max = driver.findMax(rollDice);
+        driver.report(input[0], rollDice, max);
     }
 }

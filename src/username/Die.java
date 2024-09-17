@@ -3,7 +3,7 @@
  * Lab 2 - Exceptions
  * Die class
  * Name: Amos Li
- * Last Updated: 9/12/2024
+ * Last Updated: 9/16/2024
  */
 package username;
 
@@ -33,7 +33,8 @@ public class Die {
      */
     public Die(int numSides){
         if(numSides < MIN_SIDES || numSides > MAX_SIDES) {
-            throw new IllegalArgumentException("illegal number of sides: " + numSides);
+            throw new IllegalArgumentException("Bad die creation: " +
+                    "illegal number of sides: " + numSides);
         }
         this.currentValue = 0;
         this.numSides = numSides;
@@ -56,7 +57,7 @@ public class Die {
     }
 
     /**
-     * Roll the die by randomly generating a number between the range.
+     * Rolls the die by randomly generating a number between the range.
      */
     public void roll(){
         currentValue = random.nextInt(numSides) + 1;
