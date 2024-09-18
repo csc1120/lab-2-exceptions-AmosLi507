@@ -5,15 +5,8 @@
  * Name: Amos Li
  * Last Updated: 9/16/2024
  */
-package username;
 
-/*
- * Course: CSC1020
- * Lab 2 - Exceptions
- * Main Driver class
- * Name: Amos Li
- * Last Updated: 9/12/2024
- */
+package amosli;
 
 import java.util.Scanner;
 
@@ -43,25 +36,32 @@ public class Driver {
         final int goodLength = 3;
         int i;
         Scanner sc = new Scanner(System.in);
-        System.out.print("Enter configuration:");
-        String strConf = sc.nextLine();
-        String[] dieStrData = strConf.split(" ");
+        String strConf;
+        String[] dieStrData;
         int[] dieIntData = null;
         boolean flag = true;
         while(flag){
+            System.out.print("Please enter the number of dice to roll," +
+                    " how many sides the dice have,\n and how many rolls" +
+                    " to complete, separating the values by a space.\n Example:" +
+                    " \"2 6 1000\"\n\n" + "Enter configuration:");
             try{
+                strConf = sc.nextLine();
+                dieStrData = strConf.split(" ");
+                dieIntData = new int[goodLength];
                 for(i = 0; i < goodLength; i++){
-                    dieIntData = new int[goodLength];
                     dieIntData[i] = Integer.parseInt(dieStrData[i]);
                 }
+                Die testDie = new Die(dieIntData[1]);
+                testDie.roll();
                 flag = false;
             } catch(ArrayIndexOutOfBoundsException e){
-                System.err.println("Invalid input: Expected 3 values but only received "
+                System.out.println("Invalid input: Expected 3 values but only received "
                         + e.getMessage().substring(e.getMessage().length()-1));
             } catch(NumberFormatException e){
-                System.err.println("Invalid input: All values must be whole numbers.");
-            } catch(DieNotRolledException e){
-                System.err.println(e.getMessage());
+                System.out.println("Invalid input: All values must be whole numbers.");
+            } catch(IllegalArgumentException e){
+                System.out.println(e.getMessage());
             }
         }
         sc.close();
@@ -95,6 +95,7 @@ public class Driver {
         for(int i = 0; i < numRolls; i++) {
             int value = 0;
             for (Die aDie : dice) {
+                aDie.roll();
                 value += aDie.getCurrentValue();
             }
             rolls[value - dice.length]++;
@@ -139,15 +140,12 @@ public class Driver {
         }
         for (int i = 0; i < rolls.length; i++) {
             int rollResult = numDice + i;
-            System.out.println(rollResult + " :" + rolls[i]+"\t\t" + asterisksStr[i]);
+            System.out.printf("%-2d:%-10s" + asterisksStr[i], rollResult, rolls[i]);
+            System.out.println();
         }
     }
 
     public static void main(String[] args) {
-        System.out.println("Please enter the number of dice to roll," +
-                " how many sides the dice have,\n and how many rolls" +
-                " to complete, separating the values by a space.\n Example:" +
-                " \"2 6 1000\"\n");
         Driver driver = new Driver();
         int[] input = driver.getInput();
         Die[] dice = driver.createDice(input[0], input[1]);

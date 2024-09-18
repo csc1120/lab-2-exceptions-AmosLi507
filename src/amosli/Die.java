@@ -1,13 +1,15 @@
+import java.util.Random;
+
+
 /*
  * Course: CSC1020
  * Lab 2 - Exceptions
  * Die class
  * Name: Amos Li
- * Last Updated: 9/16/2024
+ * Last Updated: 9/17/2024
  */
-package username;
 
-import java.util.Random;
+package amosli;
 
 /**
  *The die class represents a die with a signed number of sides.
@@ -47,7 +49,6 @@ public class Die {
      * @throws DieNotRolledException if the die is not rolled and the current value is 0.
      */
     public int getCurrentValue(){
-        roll();
         if(currentValue ==0){
             throw new DieNotRolledException("Die has not been rolled yet.");
         }

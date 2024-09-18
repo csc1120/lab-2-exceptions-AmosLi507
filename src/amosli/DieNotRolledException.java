@@ -3,9 +3,10 @@
  * Lab 2 - Exceptions
  * DieNotRolledException class
  * Name: Amos Li
- * Last Updated: 9/16/2024
+ * Last Updated: 9/17/2024
  */
-package username;
+
+package amosli;
 
 /**
  *This exception is throw when an attempt is made to use a die that have not been rolled
