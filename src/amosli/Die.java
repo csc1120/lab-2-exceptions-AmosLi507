@@ -1,6 +1,3 @@
-import java.util.Random;
-
-
 /*
  * Course: CSC1020
  * Lab 2 - Exceptions
@@ -10,6 +7,8 @@ import java.util.Random;
  */
 
 package amosli;
+
+import java.util.Random;
 
 /**
  *The die class represents a die with a signed number of sides.
