@@ -20,7 +20,7 @@ public class Die {
      */
     public static final int MIN_SIDES = 2;
     /**
-     * The maximum side of a die is 100.
+     * The maximum of the side is 100.
      */
     public static final int MAX_SIDES = 100;
     private int currentValue;
