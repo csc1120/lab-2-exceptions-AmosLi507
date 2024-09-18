@@ -16,7 +16,7 @@ import java.util.Random;
  */
 public class Die {
     /**
-     * The minimum side of a die is 2.
+     * The minimum of the side is 2.
      */
     public static final int MIN_SIDES = 2;
     /**
